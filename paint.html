@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sample Paint Application</title>
+
+	<style type="text/css">
+		
+		div.container{
+			text-align: center;
+		}
+
+		#reset{
+			border: 1px solid black;
+			border-radius: 5px;
+		}
+
+	</style>
+</head>
+<body>
+<div class="container">
+	<h1>Simple Paint App</h1>
+
+	<canvas id="mycanvas" width="800px" height="500px" onmousedown="mouseDown(event)" onmouseup="drawTri(event)" onmousemove="showTri(event)" style="border: 2px solid black;"></canvas>
+	<br>
+	<button id="reset" onclick="clearboard()" >Clear</button>
+</div>
+
+
+<script type="text/javascript">
+	var canvas=document.getElementById("mycanvas");
+	var cotxt=canvas.getContext("2d");
+	var dx=0,dy=0,ux,uy;
+	var max,col,y1;
+	var r=0;
+
+
+
+//...............................Function to clear board..
+
+	function clearboard(){
+		// alert("hello");
+		do{
+			console.log("clear 0");
+		var Height= canvas.height;
+		var Width= canvas.width;
+
+		cotxt.clearRect(0,0,Width,Height);	
+		}while(event.which != 1)
+		
+	}
+
+
+
+
+// ........................3 Function to record Mouse Down , Mouse Up And Drag... And Draw Triangle.....
+
+
+		//..........Mouse Down......
+
+	function mouseDown(event){
+		console.log("1");
+		// ....................var preX=0;
+		// ...................var preY=0;
+		//...................... max=0;
+		console.log("2");
+		do{
+		console.log("loop 1");
+		dx=event.pageX-245;
+		console.log(dx);
+		dy=event.pageY-85;
+		console.log(dy);
+	}while(event.which != 1)
+console.log("3");
+		console.log("###########");
+
+
+
+	}
+
+			//..........Mouse Up.......
+
+	function drawTri(event){
+
+		do
+		{
+			console.log("loop 2.1");
+			//......................f ((dx!=(event.pageX-245)) && (dy!=(event.pageY-85))) {
+				console.log("loop 2.2");
+				var ux=event.pageX-245;
+				console.log(ux);
+				var uy=event.pageY-85;
+				console.log(uy);
+		
+			
+		}while(event.which != 1)
+
+
+
+		r = Math.sqrt(Math.pow((dx - ux),2)+(Math.pow((dy - uy),2)));
+
+		Tri(dx,dy,r);
+		dx=dy=0;
+		console.log("_________________");
+	}
+
+
+			//............On Mouse Move / Drag........
+
+	function showTri(event){
+
+		if((dx!=0)&&(dy!=0)){
+			var dragX=event.pageX-245;
+			var dragY=event.pageY-85;
+			
+
+			console.log(dragX);
+			console.log(dragY);	
+			r = Math.sqrt(Math.pow((dx - dragX),2)+(Math.pow((dy - dragY),2)));
+			Tri(dx,dy,r);
+			cotxt.stroke();
+
+
+		}
+		
+		console.log("..............................");
+	}
+
+
+
+
+
+
+
+	//......................................Generate Random color.....
+
+	function randColor(){
+		  var letters = '0123456789ABCDEF';
+		  var color = '#';
+		  for (var i = 0; i < 6; i++) {
+		    color += letters[Math.floor(Math.random() * 16)];
+		  }
+		  return color;
+	}
+
+
+
+
+	//..................................Function for triangle........
+
+	function Tri(x,c,rad){
+		cotxt.beginPath();
+		y1=c-rad;
+		cotxt.moveTo(x,y1);
+		var hBase =(.87)*rad;
+		var x2 = x+hBase;
+		var y2 = Math.sqrt(Math.pow(hBase,2)-Math.pow((x2-x),2))+(c+rad/2);
+		var x3 = 2*x-x2;
+		var y3 = 2*(c+rad/2)-y2;
+		cotxt.lineTo(x2,y2);
+		cotxt.lineTo(x3,y3);
+
+		cotxt.closePath();
+		cotxt.lineWidth = 5;
+		cotxt.stroke();
+
+		cotxt.fillStyle = randColor();
+		cotxt.fill();
+	}
+
+
+
+</script>
+
+
+</body>
+</html>
